@@ -39,6 +39,7 @@ int cal_num;
 int cal_lock;
 
 int signature_len;
+int **dtw;
 
 struct node {
 	long long event_value;
@@ -93,11 +94,8 @@ double Euclidean_Distance(int *data1, int *data2, int w) {
 }
 
 int DTW_Distance(int *data1, int *data2, int w) {
-
-        int **dtw = (int **)malloc(sizeof(int *)*(WINDOW_SIZE+1));
         int i, j;
-        for (i=0; i<WINDOW_SIZE+1; i++)
-                dtw[i] = (int *)malloc(sizeof(int)*(WINDOW_SIZE+1));
+
         for (i=0; i<WINDOW_SIZE+1; i++) {
 		for (j=0; j<WINDOW_SIZE+1; j++) {
 	                dtw[i][j] = INT_MAX;
@@ -311,6 +309,10 @@ int main(int argc, char **argv) {
 	INTERVAL_A = 3000000;
 	ROUND_V = 50000;
 	ROUND_A = 5000;
+	
+        dtw = (int **)malloc(sizeof(int *)*(WINDOW_SIZE+1));
+        for (i=0; i<WINDOW_SIZE+1; i++)
+                dtw[i] = (int *)malloc(sizeof(int)*(WINDOW_SIZE+1));
 
 	begin_stamp = -1;
 	cal_num = 0;
